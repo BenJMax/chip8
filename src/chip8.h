@@ -10,11 +10,11 @@ class chip8
         Set the initial values of PC, I, etc.
         Load sprites to memory at address 0x050-0x0A0
         */ 
-        void chip8::initialize(); 
+        void initialize(); 
 
-        void chip8::loadGame(); 
+        void loadGame(); 
 
-        void chip8::runCycle(); 
+        void runCycle(); 
 
         /*
         Thanks to Lawrence Mueller @ multigesture.net for 

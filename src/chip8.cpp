@@ -32,7 +32,7 @@ void chip8::runCycle()
 {
     /*
     Beacuse we are fetching two bytes for each instruction, 
-    the first byte is shifted left 8-bits before performing bitwise or
+    the firSt byte is shifted left 8-bits before performing bitwise or
     */ 
     opcode = memory[PC] << 8 | memory[PC + 1]; 
 
@@ -84,7 +84,7 @@ void chip8::runCycle()
             break;
         case 0x5000:
             // 5xy0 - SE Vx, Vy: skip next instruction if Vx = Vy
-            if (V[opInsX] == V[opInsY]) PC != 2; 
+            if (V[opInsX] == V[opInsY]) PC += 2; 
             break;
         case 0x6000:
             // 6xnn - LD Vx: set register Vx to nn
@@ -111,9 +111,8 @@ void chip8::runCycle()
             case 0x0004:
                 // 8xy4 - ADD Vx, Vy: stores result of Vx + Vy in Vx
                 // if result if > 255, set VF == 1, else 0
-                uint16_t val = V[opInsX] + V[opInsY];
-                val > 255 ? V[15] = 1 : V[15] = 0;  
-                V[opInsX] = val;
+                V[opInsX] + V[opInsY] > 255 ? V[15] = 1 : V[15] = 0;  
+                V[opInsX] = V[opInsX] + V[opInsY];
                 break;
             case 0x0005:
                 // 8xy5 - SUB Vx, Vy: stores result of Vx - Vy in Vx
@@ -139,6 +138,7 @@ void chip8::runCycle()
                 // VF is set = 1 if MSB == 1
                 log2(V[opInsX]) == 1 ? V[15] = 1 : V[15] = 0;  
                 V[opInsX] = V[opInsX] * 2; 
+                break;
         }    
             break; 
         case 0x9000:
