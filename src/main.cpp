@@ -7,9 +7,12 @@ chip8 mychip8;
 const int WINDOW_WIDTH  = 640; 
 const int WINDOW_HEIGHT = 320;
 
+int sx = WINDOW_WIDTH / 64;
+int sy = WINDOW_HEIGHT / 32; 
+
 SDL_Window *window = NULL; 
 SDL_Renderer *renderer = NULL; 
-SDL_Texture *texture = NULL;  
+SDL_Texture *texture = NULL; 
 
 bool initWindow() 
 {
@@ -54,18 +57,18 @@ int main(int argc, char**argv)
 {
     if (argc < 2) {
         std::cout << "Usage ./play name_of_ROM" << std::endl; 
-
+        return 1; 
     }
 
     if (!initWindow())
     {
         std::cout << "Failed to initialize window" << std::endl; 
-    } else 
+        return 1; 
+    } else {
         bool quit = false; 
         mychip8.loadGame(argv[1]); 
         
         SDL_Event e; 
-
         while(!quit) {
             while( SDL_PollEvent( &e ) != 0 ) {
                 if( e.type == SDL_QUIT ) {
@@ -210,7 +213,34 @@ int main(int argc, char**argv)
                     }
                 } 
             }
+
+            mychip8.runCycle(); 
+
+            if(mychip8.drawFlag) {
+                SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+                SDL_RenderClear(renderer);
+                SDL_SetRenderDrawColor(renderer, 0x00,0x00,0x9F,0xFF);
+                int rownum = 0;
+                SDL_Rect pixel;
+                for(int y = 0; y < 32; ++y){
+                    for(int x = 0; x< 64; ++x) {
+                        
+                        pixel.x = x*sx;
+                        pixel.y = y*sy;
+                        pixel.w = 10;
+                        pixel.h = 10;
+                        rownum = y*64;
+                        if(mychip8.graphics[x + rownum] == 1){
+                            SDL_RenderFillRect(renderer,&pixel);  
+                        } 
+                    }
+                }
+                SDL_RenderPresent(renderer);
+                mychip8.drawFlag = false;
+            }
+        }
     }
+
     close(); 
 
     return 1; 

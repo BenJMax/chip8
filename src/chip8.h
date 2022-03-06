@@ -16,6 +16,12 @@ class chip8
 
         void runCycle(); 
 
+        const uint8_t PIXEL_W = 32;
+
+        const uint8_t PIXEL_H = 64;
+
+        bool drawFlag = true;  
+
         // Array to store state of pixels
         uint8_t graphics[64 * 32]; 
 
