@@ -46,7 +46,7 @@ void chip8::initialize()
         stack[i] = 0; 
     }
 
-    // Clear Memory
+    // Set memory to zero 
     for (int i = 0; i < 4096; i++) {
         memory[i] = 0; 
     }
