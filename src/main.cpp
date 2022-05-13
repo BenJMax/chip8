@@ -53,7 +53,7 @@ void close() {
     SDL_Quit();
 }
 
-int main(int argc, char**argv)
+int main(int argc, char** argv)
 {
     if (argc < 2) {
         std::cout << "Usage ./play name_of_ROM" << std::endl; 
@@ -69,6 +69,7 @@ int main(int argc, char**argv)
         mychip8.loadGame(argv[1]); 
         
         SDL_Event e; 
+
         while(!quit) {
             while( SDL_PollEvent( &e ) != 0 ) {
                 if( e.type == SDL_QUIT ) {
