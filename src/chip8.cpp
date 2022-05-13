@@ -46,7 +46,7 @@ void chip8::initialize()
         stack[i] = 0; 
     }
 
-    // Set memory to zero 
+    // Clear Memory
     for (int i = 0; i < 4096; i++) {
         memory[i] = 0; 
     }
@@ -214,7 +214,7 @@ void chip8::runCycle()
                 break; 
 
                 default: 
-                    printf("Invalid opcode 0x%X\n", opcode); 
+                    printf("Invalid opcode 8x%X\n", opcode); 
                 break; 
             }    
         break; 
